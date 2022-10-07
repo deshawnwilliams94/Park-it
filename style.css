@@ -1,0 +1,7 @@
+body{
+    height: 100vh;
+}
+#map{
+    height: 100vh;
+    border: 2px black solid;
+}
