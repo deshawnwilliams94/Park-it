@@ -12,22 +12,64 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <link rel="stylesheet" href="style.css">
-    <script  src="./index.js"></script>
+
+    <title>local-park-search</title>
 </head>
 
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Local Parks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+
+
+        <form class="form-inline my-2 my-lg-0">
+            <input id="map-search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button id="search-location" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        </div>
+    </nav>
+
+
+
     <div id="map">
         google maps
 
     </div>
+    <footer>
+        <div class="footer-pad">
+            <h4>Heading 3</h4>
+            <ul class="list-unstyled">
+                <li><a href="#">Parks and Recreation</a></li>
+
+    </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"
         integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=="
         crossorigin="anonymous"></script>
-      
-        <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCch8m3GxUl5CEP6yFNKa6kR4ougxpI19I&callback=initMap&v=weekly"
-        defer></script>
-   
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB7PAcbtKLE1mCFRaPC3f9HmUUBuW6LZg&libraries=places"></script>
+
+    <script src="./index.js"></script>
 </body>
 
 </html>
