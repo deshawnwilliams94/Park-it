@@ -16,19 +16,81 @@ $(document).ready(function () {
 
 
 
-        // const uluru = { lat: -25.344, lng: 131.031 };
-        // // The map, centered at Uluru
-        // const map = new google.maps.Map(document.getElementById("map"), {
-        //     zoom: 4,
-        //     center: uluru,
-        // });
-        // // The marker, positioned at Uluru
-        // const marker = new google.maps.Marker({
-        //     position: uluru,
-        //     map: map,
-        // });
+       
     }
 
+
+    function addParks(latOne, lonOne) {
+        var request2 = {
+            location: new google.maps.LatLng(latOne, lonOne),
+            radius: 10000,
+            type: ["park"],
+        };
+
+        var service = new google.maps.places.PlacesService(map);
+        service.nearbySearch(request2, function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+
+
+                console.log("Nearby Parks: ", results)
+                for (var i = 0; i < 10; i++) {
+
+                    //if results are not available i.e there is not photo for a listing, moves on to the next listing.
+                    if (
+                        !results[i] ||
+                        !results[i].photos ||
+                        !results[i].name ||
+                        !results[i].place_id ||
+                        !results[i].rating ||
+                        !results[i].vicinity
+                    ) {
+                        continue;
+                    }
+                    let name = results[i].name;
+                    let placeID = results[i].place_id;
+                    let photo = results[i].photos[0].getUrl;
+                    let rating = results[i].rating;
+                    let address = results[i].vicinity;
+
+
+
+                    const contentString =
+                        '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        "</div>" +
+                        '<h1 id="firstHeading" class="firstHeading">'+name+'</h1>' +
+                        '<div id="bodyContent">' +
+                        "</div>" +
+                        "</div>";
+
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                    });
+
+                    //create markers on map
+                    var marker = new google.maps.Marker({
+                        place: {
+                            placeId: placeID,
+                            location: results[i].geometry.location,
+                        },
+                        title: name,
+                        icon: {
+                            url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+                        },
+                    });
+                    marker.addListener("click", () => {
+                        infowindow.open({
+                            anchor: marker,
+                            map,
+                            ariaLabel: "Uluru",
+                        });
+                    });
+                    marker.setMap(map);
+                }
+                map.setCenter(results[0].geometry.location);
+            }
+        });
+    }
 
 
 
@@ -49,12 +111,12 @@ $(document).ready(function () {
             },
             success: function (response) {
                 //setting the variables for longitude and latitude to plug in to line 25 to center:
-                // var latOne = parseFloat(response.results[0].geometry.location.lat);
-                // var lonOne = parseFloat(response.results[0].geometry.location.lng);
+                var latOne = parseFloat(response.results[0].geometry.location.lat);
+                var lonOne = parseFloat(response.results[0].geometry.location.lng);
 
                 // //  changes map center to searched city, runs functions for restaurants and hotels:
-                // map.setCenter({ lat: latOne, lng: lonOne });
-                // addParks(latOne, lonOne);
+                map.setCenter({ lat: latOne, lng: lonOne });
+                addParks(latOne, lonOne);
 
             }
         });
@@ -70,7 +132,7 @@ $(document).ready(function () {
         var city = $("#map-search").val().trim();
         console.log(city);
         if (city) {
-            //initMap(city);
+            initMap(city);
         }
     });
 
