@@ -4,7 +4,17 @@ $(document).ready(function () {
         center: { lat: 44.9537, lng: -93.09 },
         zoom: 14,
     });
+    var history = JSON.parse(localStorage.getItem("history")) || []
+    for (var i = 0; i < history.length; i++) {
+        var newButton = $("<button>")
+        newButton.text(history[i])
+        $("#history").append(newButton)
+        newButton.on("click", function (event) {
+            initMap(event.target.textcontent);
+        })
 
+
+    }
 
     function loadMap() {
 
@@ -16,9 +26,8 @@ $(document).ready(function () {
 
 
 
-       
-    }
 
+    }
 
     function addParks(latOne, lonOne) {
         var request2 = {
@@ -58,7 +67,7 @@ $(document).ready(function () {
                         '<div id="content">' +
                         '<div id="siteNotice">' +
                         "</div>" +
-                        '<h1 id="firstHeading" class="firstHeading">'+name+'</h1>' +
+                        '<h1 id="firstHeading" class="firstHeading">' + name + '</h1>' +
                         '<div id="bodyContent">' +
                         "</div>" +
                         "</div>";
@@ -113,8 +122,13 @@ $(document).ready(function () {
                 //setting the variables for longitude and latitude to plug in to line 25 to center:
                 var latOne = parseFloat(response.results[0].geometry.location.lat);
                 var lonOne = parseFloat(response.results[0].geometry.location.lng);
-
+                console.log(latOne)
+                console.log(lonOne)
                 // //  changes map center to searched city, runs functions for restaurants and hotels:
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: 44.9537, lng: -93.09 },
+                    zoom: 14,
+                });
                 map.setCenter({ lat: latOne, lng: lonOne });
                 addParks(latOne, lonOne);
 
@@ -123,15 +137,27 @@ $(document).ready(function () {
 
     }
 
+    function parkHistory(city) {
+        history.push(city)
+        localStorage.setItem("history", JSON.stringify(history))
+
+        var newButton = $("<button>")
+        newButton.text(city)
+        $("#history").append(newButton)
+        newButton.on("click", function () {
+            initMap(city);
+        })
+    }
 
 
 
-    $("#search-location").on("click", function (event) {
+    $("#search-form").on("submit", function (event) {
         event.preventDefault();
 
         var city = $("#map-search").val().trim();
         console.log(city);
         if (city) {
+            parkHistory(city)
             initMap(city);
         }
     });

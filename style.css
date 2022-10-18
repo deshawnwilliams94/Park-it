@@ -2,6 +2,9 @@ head{
     height: 100vh;
     color: black;
     border: 2px;
+    body {
+  background-color: lightblue;
+}
 }
 
 body{
@@ -17,3 +20,6 @@ body{
     align-items: center;
 }
 
+body {
+    background-color: lightblue;
+  }
