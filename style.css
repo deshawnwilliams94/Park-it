@@ -1,7 +1,19 @@
+head{
+    height: 100vh;
+    color: black;
+    border: 2px;
+}
+
 body{
     height: 100vh;
+    color: rgb(101, 136, 35);
 }
 #map{
-    height: 100vh;
+    height: 50vh;
+    width: 100vw;
     border: 2px black solid;
+    display: flex;
+    justify-content: space-around ;
+    align-items: center;
 }
+
